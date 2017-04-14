@@ -1,5 +1,5 @@
 import React, { createElement } from 'react'
-import { Image, Text, View, Linking } from 'react-native'
+import { Image, Text, View, Linking, ScrollView } from 'react-native'
 import SimpleMarkdown from 'simple-markdown'
 import _ from 'lodash'
 
@@ -37,12 +37,29 @@ export default (styles) => ({
     }
   },
   codeBlock: {
+    parse: (capture, parse, state) => {
+      const regexp = /^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n *)+\n/
+      const matchedContent = capture[0].match(regexp)
+
+      return {
+        lang: undefined,
+        content: matchedContent[3]
+      }
+    },
     react: (node, output, state) => {
       state.withinText = true
-      return createElement(Text, {
+      const codeElement = createElement(Text, {
         key: state.key,
         style: styles.codeBlock
-      }, null)
+      }, node.content)
+      const scrollElement = createElement(ScrollView, {
+        horizontal: true,
+        key: state.key
+      }, codeElement)
+      return createElement(View, {
+        key: state.key,
+        style: styles.codeBlockContainer
+      }, scrollElement)
     }
   },
   del: {

@@ -1,4 +1,6 @@
 /* @flow */
+import {Platform} from 'react-native'
+const iOS = Platform.OS === 'ios'
 
 const styles = {
   blockQuoteSection: {
@@ -11,8 +13,14 @@ const styles = {
     marginRight: 15,
   },
   codeBlock: {
-    fontFamily: 'Courier',
-    fontWeight: '500',
+    fontFamily: iOS ? 'Courier' : 'monospace'
+  },
+  codeBlockContainer: {
+    backgroundColor: '#eeeeee',
+    borderColor: '#dddddd',
+    borderRadius: 3,
+    borderWidth: 1,
+    padding: 4
   },
   del: {
     containerBackgroundColor: '#222222',
