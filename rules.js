@@ -21,7 +21,7 @@ export default (styles) => ({
         key: state.key,
         style: [styles.blockQuoteSectionBar, styles.blockQuoteBar]
       })
-      const blockText = createElement(Text, {
+      const blockText = createElement(View, {
         key: state.key + 1,
         style: styles.blockQuoteText
       }, output(node.content, state))
